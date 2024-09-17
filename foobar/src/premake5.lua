@@ -1,6 +1,3 @@
-include "tools/premake5/utils.lua"
-
-
 PRJ_FILE_DESTINATION = ".build"
 CFG_FULL_NAME = "%{cfg.system:lower()}-%{cfg.platform:lower()}-%{cfg.buildcfg:lower()}"
 PRJ_OUTPUT_DIR = ".build/bin/%{CFG_FULL_NAME}"
