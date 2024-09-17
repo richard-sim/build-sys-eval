@@ -67,34 +67,32 @@ function L1b(options)
         use_L0a {}
         use_TPc {}
 
-        filter "system:linux or macosx"
-            defines { iif(options.static == "true", "L1b_STATIC", "L1b_SHARED"), "L1b_BUILDING" }
-        
-        filter "system:windows"
-            defines { iif(options.static == "true", "L1b_STATIC", "L1b_SHARED"), "L1b_BUILDING" }
+        defines { "L1b_BUILDING" }
+        filter "kind:StaticLib"
+            defines { "L1b_STATIC" }
+        filter "kind:SharedLib"
+            defines { "L1b_SHARED" }
+        filter {}
 
         filter "configurations:Release"
             defines { "NDEBUG" }
             symbols "Off"
             optimize "On"
-
         filter "configurations:RelDebug"
             defines { "DEBUG" }
             symbols "On"
             optimize "On"
-
         filter "configurations:Debug"
             defines { "DEBUG" }
             symbols "On"
             optimize "Off"
-
         filter "configurations:Profile"
             defines { "NDEBUG" }
             symbols "On"
             optimize "On"
-
         filter "configurations:Test"
             defines { "DEBUG" }
             symbols "On"
             optimize "Off"
+        filter {}
 end

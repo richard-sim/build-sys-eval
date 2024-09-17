@@ -60,34 +60,32 @@ function TPb(options)
         includedirs { relProjectPath.."/TPb" }
         includedirs { relProjectPath }
 
-        filter "system:linux or macosx"
-            defines { iif(options.static == "true", "TPb_STATIC", "TPb_SHARED"), "TPb_BUILDING" }
-        
-        filter "system:windows"
-            defines { iif(options.static == "true", "TPb_STATIC", "TPb_SHARED"), "TPb_BUILDING" }
+        defines { "TPb_BUILDING" }
+        filter "kind:StaticLib"
+            defines { "TPb_STATIC" }
+        filter "kind:SharedLib"
+            defines { "TPb_SHARED" }
+        filter {}
 
         filter "configurations:Release"
             defines { "NDEBUG" }
             symbols "Off"
             optimize "On"
-
         filter "configurations:RelDebug"
             defines { "DEBUG" }
             symbols "On"
             optimize "On"
-
         filter "configurations:Debug"
             defines { "DEBUG" }
             symbols "On"
             optimize "Off"
-
         filter "configurations:Profile"
             defines { "NDEBUG" }
             symbols "On"
             optimize "On"
-
         filter "configurations:Test"
             defines { "DEBUG" }
             symbols "On"
             optimize "Off"
+        filter {}
 end

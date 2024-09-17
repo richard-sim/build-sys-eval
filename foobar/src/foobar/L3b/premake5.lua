@@ -34,24 +34,21 @@ function L3b(options)
             defines { "NDEBUG" }
             symbols "Off"
             optimize "On"
-
         filter "configurations:RelDebug"
             defines { "DEBUG" }
             symbols "On"
             optimize "On"
-
         filter "configurations:Debug"
             defines { "DEBUG" }
             symbols "On"
             optimize "Off"
-
         filter "configurations:Profile"
             defines { "NDEBUG" }
             symbols "On"
             optimize "On"
-
         filter "configurations:Test"
             defines { "DEBUG" }
             symbols "On"
             optimize "Off"
+        filter {}
 end

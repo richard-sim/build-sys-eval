@@ -69,34 +69,32 @@ function L2a(options)
         use_L1a {}
         use_L1b {}
 
-        filter "system:linux or macosx"
-            defines { iif(options.static == "true", "L2a_STATIC", "L2a_SHARED"), "L2a_BUILDING" }
-        
-        filter "system:windows"
-            defines { iif(options.static == "true", "L2a_STATIC", "L2a_SHARED"), "L2a_BUILDING" }
+        defines { "L2a_BUILDING" }
+        filter "kind:StaticLib"
+            defines { "L2a_STATIC" }
+        filter "kind:SharedLib"
+            defines { "L2a_SHARED" }
+        filter {}
 
         filter "configurations:Release"
             defines { "NDEBUG" }
             symbols "Off"
             optimize "On"
-
         filter "configurations:RelDebug"
             defines { "DEBUG" }
             symbols "On"
             optimize "On"
-
         filter "configurations:Debug"
             defines { "DEBUG" }
             symbols "On"
             optimize "Off"
-
         filter "configurations:Profile"
             defines { "NDEBUG" }
             symbols "On"
             optimize "On"
-
         filter "configurations:Test"
             defines { "DEBUG" }
             symbols "On"
             optimize "Off"
+        filter {}
 end

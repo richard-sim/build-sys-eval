@@ -70,43 +70,39 @@ function L0a(options)
             files { relProjectPath.."/linux/**.h", relProjectPath.."/linux/**.c" }
             includedirs { relProjectPath.."/linux/L0a" }
             includedirs { relProjectPath.."/linux" }
-
         filter "system:macosx"
             files { relProjectPath.."/macos/**.h", relProjectPath.."/macos/**.c" }
             includedirs { relProjectPath.."/macos/L0a" }
             includedirs { relProjectPath.."/macos" }
-
         filter "system:windows"
             files { relProjectPath.."/windows/**.h", relProjectPath.."/windows/**.c" }
             includedirs { relProjectPath.."/windows/L0a" }
             includedirs { relProjectPath.."/windows" }
+        filter {}
 
-        filter "system:linux or macosx"
-            defines { iif(options.static == "true", "L0a_STATIC", "L0a_SHARED"), "L0a_BUILDING" }
-        
-        filter "system:windows"
-            defines { iif(options.static == "true", "L0a_STATIC", "L0a_SHARED"), "L0a_BUILDING" }
+        defines { "L0a_BUILDING" }
+        filter "kind:StaticLib"
+            defines { "L0a_STATIC" }
+        filter "kind:SharedLib"
+            defines { "L0a_SHARED" }
+        filter {}
 
         filter "configurations:Release"
             defines { "NDEBUG" }
             symbols "Off"
             optimize "On"
-
         filter "configurations:RelDebug"
             defines { "DEBUG" }
             symbols "On"
             optimize "On"
-
         filter "configurations:Debug"
             defines { "DEBUG" }
             symbols "On"
             optimize "Off"
-
         filter "configurations:Profile"
             defines { "NDEBUG" }
             symbols "On"
             optimize "On"
-
         filter "configurations:Test"
             defines { "DEBUG" }
             symbols "On"

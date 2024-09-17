@@ -65,34 +65,32 @@ function L1c(options)
 
         use_L0a {}
 
-        filter "system:linux or macosx"
-            defines { iif(options.static == "true", "L1c_STATIC", "L1c_SHARED"), "L1c_BUILDING" }
-        
-        filter "system:windows"
-            defines { iif(options.static == "true", "L1c_STATIC", "L1c_SHARED"), "L1c_BUILDING" }
+        defines { "L1c_BUILDING" }
+        filter "kind:StaticLib"
+            defines { "L1c_STATIC" }
+        filter "kind:SharedLib"
+            defines { "L1c_SHARED" }
+        filter {}
 
         filter "configurations:Release"
             defines { "NDEBUG" }
             symbols "Off"
             optimize "On"
-
         filter "configurations:RelDebug"
             defines { "DEBUG" }
             symbols "On"
             optimize "On"
-
         filter "configurations:Debug"
             defines { "DEBUG" }
             symbols "On"
             optimize "Off"
-
         filter "configurations:Profile"
             defines { "NDEBUG" }
             symbols "On"
             optimize "On"
-
         filter "configurations:Test"
             defines { "DEBUG" }
             symbols "On"
             optimize "Off"
+        filter {}
 end

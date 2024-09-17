@@ -60,34 +60,32 @@ function L0b(options)
         includedirs { relProjectPath.."/L0b" }
         includedirs { relProjectPath }
 
-        filter "system:linux or macosx"
-            defines { iif(options.static == "true", "L0b_STATIC", "L0b_SHARED"), "L0b_BUILDING" }
-        
-        filter "system:windows"
-            defines { iif(options.static == "true", "L0b_STATIC", "L0b_SHARED"), "L0b_BUILDING" }
+        defines { "L0b_BUILDING" }
+        filter "kind:StaticLib"
+            defines { "L0b_STATIC" }
+        filter "kind:SharedLib"
+            defines { "L0b_SHARED" }
+        filter {}
 
         filter "configurations:Release"
             defines { "NDEBUG" }
             symbols "Off"
             optimize "On"
-
         filter "configurations:RelDebug"
             defines { "DEBUG" }
             symbols "On"
             optimize "On"
-
         filter "configurations:Debug"
             defines { "DEBUG" }
             symbols "On"
             optimize "Off"
-
         filter "configurations:Profile"
             defines { "NDEBUG" }
             symbols "On"
             optimize "On"
-
         filter "configurations:Test"
             defines { "DEBUG" }
             symbols "On"
             optimize "Off"
+        filter {}
 end

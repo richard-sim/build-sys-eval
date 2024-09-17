@@ -69,34 +69,32 @@ function L1a(options)
         use_TPa {}
         use_TPb {}
 
-        filter "system:linux or macosx"
-            defines { iif(options.static == "true", "L1a_STATIC", "L1a_SHARED"), "L1a_BUILDING" }
-        
-        filter "system:windows"
-            defines { iif(options.static == "true", "L1a_STATIC", "L1a_SHARED"), "L1a_BUILDING" }
+        defines { "L1a_BUILDING" }
+        filter "kind:StaticLib"
+            defines { "L1a_STATIC" }
+        filter "kind:SharedLib"
+            defines { "L1a_SHARED" }
+        filter {}
 
         filter "configurations:Release"
             defines { "NDEBUG" }
             symbols "Off"
             optimize "On"
-
         filter "configurations:RelDebug"
             defines { "DEBUG" }
             symbols "On"
             optimize "On"
-
         filter "configurations:Debug"
             defines { "DEBUG" }
             symbols "On"
             optimize "Off"
-
         filter "configurations:Profile"
             defines { "NDEBUG" }
             symbols "On"
             optimize "On"
-
         filter "configurations:Test"
             defines { "DEBUG" }
             symbols "On"
             optimize "Off"
+        filter {}
 end
