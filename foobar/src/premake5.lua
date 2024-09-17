@@ -58,12 +58,24 @@ workspace "foobar"
     objdir ".build/obj/%{cfg.platform}-%{cfg.buildcfg}"
 
     -- Will be inherited by all projects, so we don't have to repeat it
-    postbuildcommands {
-        "{MKDIR} %[%{WKS_OUTPUT_DIR}]",
-        "{COPYFILE} %[%{PRJ_OUTPUT_DIR}/*.dll] %[%{WKS_OUTPUT_DIR}]",
-        "{COPYFILE} %[%{PRJ_OUTPUT_DIR}/*.exe] %[%{WKS_OUTPUT_DIR}]",
-        "{COPYFILE} %[%{PRJ_OUTPUT_DIR}/*.pdb] %[%{WKS_OUTPUT_DIR}]"
-    }
+    filter "kind:not StaticLib"
+        postbuildcommands {
+            -- "%[%{cfg.buildtarget.directory}]" is the abs path to the output directory, including a trailing slash
+            -- "%[%{cfg.buildtarget.relpath}]" is the rel path to the output directory relative to the obj directory(!), including a trailing slash
+            -- "%[%{!cfg.buildtarget.relpath}]" is the rel path to the output directory relative to the .build directory(!)
+            -- "%[%{cfg.buildtarget.abspath}]" is ALSO the rel path to the output directory relative to the .build directory(!)
+            -- "%[%{!cfg.buildtarget.abspath}]" is ALSO the rel path to the output directory relative to the .build directory(!)
+            -- "%[%{cfg.buildtarget.name}]" is the name of the output file, including the extension but without any path information
+            -- "%[%{cfg.buildtarget.basename}]" is the name of the output file, without the extension and without any path information
+            -- "%[%{cfg.buildtarget.extension}]" is the extension of the output file, including the dot
+            "{MKDIR} %[%{WKS_OUTPUT_DIR}]",
+            -- Attempt to copy the symbols first, as the postbuildcommand step will fail
+            -- if the last command fails.
+            "{COPYFILE} %[%{cfg.buildtarget.directory}%{cfg.buildtarget.basename}.pdb] %[%{WKS_OUTPUT_DIR}]",
+            "{COPYFILE} %[%{cfg.buildtarget.directory}%{cfg.buildtarget.basename}.map] %[%{WKS_OUTPUT_DIR}]",
+            "{COPYFILE} %[%{cfg.buildtarget.directory}%{cfg.buildtarget.name}] %[%{WKS_OUTPUT_DIR}]"
+        }
+    filter {}
 
     group "Libraries"
         L0a {}
