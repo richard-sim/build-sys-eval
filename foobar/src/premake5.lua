@@ -1,6 +1,6 @@
 PRJ_FILE_DESTINATION = ".build"
 CFG_FULL_NAME = "%{cfg.system:lower()}-%{cfg.platform:lower()}-%{cfg.buildcfg:lower()}"
-PRJ_OUTPUT_DIR = ".build/bin/%{CFG_FULL_NAME}"
+PRJ_OUTPUT_DIR = ".build/bin/%{CFG_FULL_NAME}/%{prj.name}"
 PRJ_BIN_DIR = ".build/bin/%{CFG_FULL_NAME}/%{prj.name}"
 PRJ_OBJ_DIR = ".build/obj/%{CFG_FULL_NAME}/%{prj.name}"
 WKS_OUTPUT_DIR = "../build/%{CFG_FULL_NAME}"
@@ -57,12 +57,13 @@ workspace "foobar"
     targetdir ".build/bin/%{cfg.platform}-%{cfg.buildcfg}"
     objdir ".build/obj/%{cfg.platform}-%{cfg.buildcfg}"
 
-    -- postbuildcommands {
-    --     "{MKDIR} %[%{WKS_OUTPUT_DIR}]",
-    --     "{COPYFILE} %[%{PRJ_OUTPUT_DIR}/*.dll] %{WKS_OUTPUT_DIR}",
-    --     "{COPYFILE} %[%{PRJ_OUTPUT_DIR}/*.exe] %{WKS_OUTPUT_DIR}",
-    --     "{COPYFILE} %[%{PRJ_OUTPUT_DIR}/*.pdb] %{WKS_OUTPUT_DIR}"
-    -- }
+    -- Will be inherited by all projects, so we don't have to repeat it
+    postbuildcommands {
+        "{MKDIR} %[%{WKS_OUTPUT_DIR}]",
+        "{COPYFILE} %[%{PRJ_OUTPUT_DIR}/*.dll] %[%{WKS_OUTPUT_DIR}]",
+        "{COPYFILE} %[%{PRJ_OUTPUT_DIR}/*.exe] %[%{WKS_OUTPUT_DIR}]",
+        "{COPYFILE} %[%{PRJ_OUTPUT_DIR}/*.pdb] %[%{WKS_OUTPUT_DIR}]"
+    }
 
     group "Libraries"
         L0a {}
