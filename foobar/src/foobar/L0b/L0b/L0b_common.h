@@ -5,7 +5,7 @@
 
 #include "L0b_library_config.h"
 
-L0b_API uint32_t L0b_common_variable;
+L0b_API extern uint32_t L0b_common_variable;
 
 L0b_API void L0b_common_void_function();
 L0b_API uint32_t L0b_common_uint32_function();

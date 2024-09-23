@@ -5,7 +5,7 @@
 
 #include "L1c_library_config.h"
 
-L1c_API uint32_t L1c_common_variable;
+L1c_API extern uint32_t L1c_common_variable;
 
 L1c_API void L1c_common_void_function();
 L1c_API uint32_t L1c_common_uint32_function();

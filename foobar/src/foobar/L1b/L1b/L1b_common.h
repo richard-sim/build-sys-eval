@@ -5,7 +5,7 @@
 
 #include "L1b_library_config.h"
 
-L1b_API uint32_t L1b_common_variable;
+L1b_API extern uint32_t L1b_common_variable;
 
 L1b_API void L1b_common_void_function();
 L1b_API uint32_t L1b_common_uint32_function();

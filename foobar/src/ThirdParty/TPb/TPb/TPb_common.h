@@ -5,7 +5,7 @@
 
 #include "TPb_library_config.h"
 
-TPb_API uint32_t TPb_common_variable;
+TPb_API extern uint32_t TPb_common_variable;
 
 TPb_API void TPb_common_void_function();
 TPb_API uint32_t TPb_common_uint32_function();

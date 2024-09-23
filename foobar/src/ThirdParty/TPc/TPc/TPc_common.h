@@ -5,7 +5,7 @@
 
 #include "TPc_library_config.h"
 
-TPc_API uint32_t TPc_common_variable;
+TPc_API extern uint32_t TPc_common_variable;
 
 TPc_API void TPc_common_void_function();
 TPc_API uint32_t TPc_common_uint32_function();

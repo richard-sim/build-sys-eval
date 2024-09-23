@@ -5,7 +5,7 @@
 
 #include "TPa_library_config.h"
 
-TPa_API uint32_t TPa_common_variable;
+TPa_API extern uint32_t TPa_common_variable;
 
 TPa_API void TPa_common_void_function();
 TPa_API uint32_t TPa_common_uint32_function();
