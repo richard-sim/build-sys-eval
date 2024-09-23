@@ -1,7 +1,3 @@
-include "../L0a"
-include "../../ThirdParty/TPc"
-
-
 local rootDir = _MAIN_SCRIPT_DIR
 local absProjectPath = _SCRIPT_DIR
 local relProjectPath = path.rebase(absProjectPath, rootDir, rootDir)

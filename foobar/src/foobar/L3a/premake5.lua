@@ -1,14 +1,3 @@
-include "../L0a"
-include "../L1a"
-include "../L1b"
-include "../L1c"
-include "../L2a"
-include "../../ThirdParty/TPa"
-include "../../ThirdParty/TPb"
-include "../../ThirdParty/TPc"
-include "../../ThirdParty/TPd"
-
-
 local rootDir = _MAIN_SCRIPT_DIR
 local absProjectPath = _SCRIPT_DIR
 local relProjectPath = path.rebase(absProjectPath, rootDir, rootDir)

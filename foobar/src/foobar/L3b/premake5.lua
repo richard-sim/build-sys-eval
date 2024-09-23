@@ -1,8 +1,3 @@
-include "../L0a"
-include "../L0b"
-include "../L1b"
-
-
 local rootDir = _MAIN_SCRIPT_DIR
 local absProjectPath = _SCRIPT_DIR
 local relProjectPath = path.rebase(absProjectPath, rootDir, rootDir)
