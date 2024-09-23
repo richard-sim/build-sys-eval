@@ -1,0 +1,66 @@
+[
+{
+  "directory": "D:\\dev\\build-sys-eval\\foobar\\src",
+  "arguments": ["C:\\Program Files\\Microsoft Visual Studio\\2022\\Preview\\VC\\Tools\\Llvm\\x64\\bin\\clang-cl.exe", "-c", "-m64", "-W3", "-WX", "-O2", "-TP", "-MT", "-Ifoobar\\L1a\\L1a", "-Ifoobar\\L1a", "-Ifoobar\\L0a\\common", "-Ifoobar\\L0a\\windows", "-IThirdParty\\TPa", "-IThirdParty\\TPb", "-DL1a_BUILDING", "-DL1a_SHARED", "-DL0a_SHARED", "-DTPa_SHARED", "-DTPb_SHARED", "-DNDEBUG", "-Fo.build\\obj\\L1a\\windows\\x64\\release\\foobar\\L1a\\L1a\\L1a_common.c.obj", "foobar\\L1a\\L1a\\L1a_common.c"],
+  "file": "foobar\\L1a\\L1a\\L1a_common.c"
+},
+{
+  "directory": "D:\\dev\\build-sys-eval\\foobar\\src",
+  "arguments": ["C:\\Program Files\\Microsoft Visual Studio\\2022\\Preview\\VC\\Tools\\Llvm\\x64\\bin\\clang-cl.exe", "-c", "-m64", "-W3", "-WX", "-O2", "-TP", "-MT", "-Ifoobar\\L2a\\L2a", "-Ifoobar\\L2a", "-Ifoobar\\L1a", "-IThirdParty\\TPa", "-IThirdParty\\TPb", "-Ifoobar\\L1b", "-Ifoobar\\L0a\\common", "-Ifoobar\\L0a\\windows", "-IThirdParty\\TPc", "-DL2a_BUILDING", "-DL2a_STATIC", "-DL1a_SHARED", "-DTPa_SHARED", "-DTPb_SHARED", "-DL1b_STATIC", "-DL0a_SHARED", "-DTPc_STATIC", "-DNDEBUG", "-Fo.build\\obj\\L2a\\windows\\x64\\release\\foobar\\L2a\\L2a\\L2a_common.c.obj", "foobar\\L2a\\L2a\\L2a_common.c"],
+  "file": "foobar\\L2a\\L2a\\L2a_common.c"
+},
+{
+  "directory": "D:\\dev\\build-sys-eval\\foobar\\src",
+  "arguments": ["C:\\Program Files\\Microsoft Visual Studio\\2022\\Preview\\VC\\Tools\\Llvm\\x64\\bin\\clang-cl.exe", "-c", "-m64", "-W3", "-WX", "-O2", "-TP", "-MT", "-Ifoobar\\L0a\\common\\L0a", "-Ifoobar\\L0a\\common", "-Ifoobar\\L0a\\windows\\L0a", "-Ifoobar\\L0a\\windows", "-DL0a_BUILDING", "-DL0a_SHARED", "-DNDEBUG", "-Fo.build\\obj\\L0a\\windows\\x64\\release\\foobar\\L0a\\common\\L0a\\L0a_common.c.obj", "foobar\\L0a\\common\\L0a\\L0a_common.c"],
+  "file": "foobar\\L0a\\common\\L0a\\L0a_common.c"
+},
+{
+  "directory": "D:\\dev\\build-sys-eval\\foobar\\src",
+  "arguments": ["C:\\Program Files\\Microsoft Visual Studio\\2022\\Preview\\VC\\Tools\\Llvm\\x64\\bin\\clang-cl.exe", "-c", "-m64", "-W3", "-WX", "-O2", "-TP", "-MT", "-Ifoobar\\L0a\\common\\L0a", "-Ifoobar\\L0a\\common", "-Ifoobar\\L0a\\windows\\L0a", "-Ifoobar\\L0a\\windows", "-DL0a_BUILDING", "-DL0a_SHARED", "-DNDEBUG", "-Fo.build\\obj\\L0a\\windows\\x64\\release\\foobar\\L0a\\windows\\L0a\\platform\\L0a_platform.c.obj", "foobar\\L0a\\windows\\L0a\\platform\\L0a_platform.c"],
+  "file": "foobar\\L0a\\windows\\L0a\\platform\\L0a_platform.c"
+},
+{
+  "directory": "D:\\dev\\build-sys-eval\\foobar\\src",
+  "arguments": ["C:\\Program Files\\Microsoft Visual Studio\\2022\\Preview\\VC\\Tools\\Llvm\\x64\\bin\\clang-cl.exe", "-c", "-m64", "-W3", "-WX", "-O2", "-TP", "-MT", "-Ifoobar\\L1c\\L1c", "-Ifoobar\\L1c", "-Ifoobar\\L0a\\common", "-Ifoobar\\L0a\\windows", "-DL1c_BUILDING", "-DL1c_STATIC", "-DL0a_SHARED", "-DNDEBUG", "-Fo.build\\obj\\L1c\\windows\\x64\\release\\foobar\\L1c\\L1c\\L1c_common.c.obj", "foobar\\L1c\\L1c\\L1c_common.c"],
+  "file": "foobar\\L1c\\L1c\\L1c_common.c"
+},
+{
+  "directory": "D:\\dev\\build-sys-eval\\foobar\\src",
+  "arguments": ["C:\\Program Files\\Microsoft Visual Studio\\2022\\Preview\\VC\\Tools\\Llvm\\x64\\bin\\clang-cl.exe", "-c", "-m64", "-W3", "-WX", "-O2", "-TP", "-MT", "-IThirdParty\\TPc\\TPc", "-IThirdParty\\TPc", "-DTPc_BUILDING", "-DTPc_STATIC", "-DNDEBUG", "-Fo.build\\obj\\TPc\\windows\\x64\\release\\ThirdParty\\TPc\\TPc\\TPc_common.c.obj", "ThirdParty\\TPc\\TPc\\TPc_common.c"],
+  "file": "ThirdParty\\TPc\\TPc\\TPc_common.c"
+},
+{
+  "directory": "D:\\dev\\build-sys-eval\\foobar\\src",
+  "arguments": ["C:\\Program Files\\Microsoft Visual Studio\\2022\\Preview\\VC\\Tools\\Llvm\\x64\\bin\\clang-cl.exe", "-c", "-m64", "-W3", "-WX", "-O2", "-TP", "-MT", "-Ifoobar\\L3a\\L3a", "-Ifoobar\\L3a", "-Ifoobar\\L1c", "-Ifoobar\\L2a", "-Ifoobar\\L1a", "-IThirdParty\\TPb", "-Ifoobar\\L1b", "-Ifoobar\\L0a\\common", "-Ifoobar\\L0a\\windows", "-IThirdParty\\TPc", "-IThirdParty\\TPa", "-IThirdParty\\TPd", "-DL1c_STATIC", "-DL2a_STATIC", "-DL1a_SHARED", "-DTPb_SHARED", "-DL1b_STATIC", "-DL0a_SHARED", "-DTPc_STATIC", "-DTPa_SHARED", "-DTPd_STATIC", "-DNDEBUG", "-Fo.build\\obj\\L3a\\windows\\x64\\release\\foobar\\L3a\\L3a\\L3a_main.c.obj", "foobar\\L3a\\L3a\\L3a_main.c"],
+  "file": "foobar\\L3a\\L3a\\L3a_main.c"
+},
+{
+  "directory": "D:\\dev\\build-sys-eval\\foobar\\src",
+  "arguments": ["C:\\Program Files\\Microsoft Visual Studio\\2022\\Preview\\VC\\Tools\\Llvm\\x64\\bin\\clang-cl.exe", "-c", "-m64", "-W3", "-WX", "-O2", "-TP", "-MT", "-Ifoobar\\L1b\\L1b", "-Ifoobar\\L1b", "-Ifoobar\\L0a\\common", "-Ifoobar\\L0a\\windows", "-IThirdParty\\TPc", "-DL1b_BUILDING", "-DL1b_STATIC", "-DL0a_SHARED", "-DTPc_STATIC", "-DNDEBUG", "-Fo.build\\obj\\L1b\\windows\\x64\\release\\foobar\\L1b\\L1b\\L1b_common.c.obj", "foobar\\L1b\\L1b\\L1b_common.c"],
+  "file": "foobar\\L1b\\L1b\\L1b_common.c"
+},
+{
+  "directory": "D:\\dev\\build-sys-eval\\foobar\\src",
+  "arguments": ["C:\\Program Files\\Microsoft Visual Studio\\2022\\Preview\\VC\\Tools\\Llvm\\x64\\bin\\clang-cl.exe", "-c", "-m64", "-W3", "-WX", "-O2", "-TP", "-MT", "-Ifoobar\\L0b\\L0b", "-Ifoobar\\L0b", "-DL0b_BUILDING", "-DL0b_STATIC", "-DNDEBUG", "-Fo.build\\obj\\L0b\\windows\\x64\\release\\foobar\\L0b\\L0b\\L0b_common.c.obj", "foobar\\L0b\\L0b\\L0b_common.c"],
+  "file": "foobar\\L0b\\L0b\\L0b_common.c"
+},
+{
+  "directory": "D:\\dev\\build-sys-eval\\foobar\\src",
+  "arguments": ["C:\\Program Files\\Microsoft Visual Studio\\2022\\Preview\\VC\\Tools\\Llvm\\x64\\bin\\clang-cl.exe", "-c", "-m64", "-W3", "-WX", "-O2", "-TP", "-MT", "-IThirdParty\\TPd\\TPd", "-IThirdParty\\TPd", "-DTPd_BUILDING", "-DTPd_STATIC", "-DNDEBUG", "-Fo.build\\obj\\TPd\\windows\\x64\\release\\ThirdParty\\TPd\\TPd\\TPd_common.c.obj", "ThirdParty\\TPd\\TPd\\TPd_common.c"],
+  "file": "ThirdParty\\TPd\\TPd\\TPd_common.c"
+},
+{
+  "directory": "D:\\dev\\build-sys-eval\\foobar\\src",
+  "arguments": ["C:\\Program Files\\Microsoft Visual Studio\\2022\\Preview\\VC\\Tools\\Llvm\\x64\\bin\\clang-cl.exe", "-c", "-m64", "-W3", "-WX", "-O2", "-TP", "-MT", "-IThirdParty\\TPb\\TPb", "-IThirdParty\\TPb", "-DTPb_BUILDING", "-DTPb_SHARED", "-DNDEBUG", "-Fo.build\\obj\\TPb\\windows\\x64\\release\\ThirdParty\\TPb\\TPb\\TPb_common.c.obj", "ThirdParty\\TPb\\TPb\\TPb_common.c"],
+  "file": "ThirdParty\\TPb\\TPb\\TPb_common.c"
+},
+{
+  "directory": "D:\\dev\\build-sys-eval\\foobar\\src",
+  "arguments": ["C:\\Program Files\\Microsoft Visual Studio\\2022\\Preview\\VC\\Tools\\Llvm\\x64\\bin\\clang-cl.exe", "-c", "-m64", "-W3", "-WX", "-O2", "-TP", "-MT", "-Ifoobar\\L3b\\L3b", "-Ifoobar\\L3b", "-Ifoobar\\L0b", "-Ifoobar\\L1b", "-Ifoobar\\L0a\\common", "-Ifoobar\\L0a\\windows", "-IThirdParty\\TPc", "-DL0b_STATIC", "-DL1b_STATIC", "-DL0a_SHARED", "-DTPc_STATIC", "-DNDEBUG", "-Fo.build\\obj\\L3b\\windows\\x64\\release\\foobar\\L3b\\L3b\\L3b_main.c.obj", "foobar\\L3b\\L3b\\L3b_main.c"],
+  "file": "foobar\\L3b\\L3b\\L3b_main.c"
+},
+{
+  "directory": "D:\\dev\\build-sys-eval\\foobar\\src",
+  "arguments": ["C:\\Program Files\\Microsoft Visual Studio\\2022\\Preview\\VC\\Tools\\Llvm\\x64\\bin\\clang-cl.exe", "-c", "-m64", "-W3", "-WX", "-O2", "-TP", "-MT", "-IThirdParty\\TPa\\TPa", "-IThirdParty\\TPa", "-DTPa_BUILDING", "-DTPa_SHARED", "-DNDEBUG", "-Fo.build\\obj\\TPa\\windows\\x64\\release\\ThirdParty\\TPa\\TPa\\TPa_common.c.obj", "ThirdParty\\TPa\\TPa\\TPa_common.c"],
+  "file": "ThirdParty\\TPa\\TPa\\TPa_common.c"
+}]
