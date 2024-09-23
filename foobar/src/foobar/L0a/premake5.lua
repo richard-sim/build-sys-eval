@@ -107,4 +107,5 @@ function L0a(options)
             defines { "DEBUG" }
             symbols "On"
             optimize "Off"
+        filter {}
 end
