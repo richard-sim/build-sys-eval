@@ -1,2 +1,7 @@
 foobar/build/
-foobar/src/.build
+foobar/src/.build*
+
+# Ignore xmake files (it loves to scatter them everywhere)
+foobar/src/.xmake
+foobar/src/CMakelists.txt
+foobar/src/vsxmake*
