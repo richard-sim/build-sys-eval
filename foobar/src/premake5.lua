@@ -61,27 +61,35 @@ workspace "foobar"
     filter "kind:not StaticLib"
         postbuildcommands {
             -- "%[%{cfg.buildtarget.directory}]" is the abs path to the output directory, including a trailing slash
-            "{ECHO} %{prj.name} cfg.buildtarget.directory: %[%{cfg.buildtarget.directory}]",
+            "{ECHO} %{prj.name} [cfg.buildtarget.directory]: %[%{cfg.buildtarget.directory}]",
+            "{ECHO} %{prj.name} cfg.buildtarget.directory: %{cfg.buildtarget.directory}",
             -- "%[%{cfg.buildtarget.relpath}]" is the rel path to the output directory relative to the obj directory(!), including a trailing slash
-            "{ECHO} %{prj.name} cfg.buildtarget.relpath: %[%{cfg.buildtarget.relpath}]",
+            "{ECHO} %{prj.name} [cfg.buildtarget.relpath]: %[%{cfg.buildtarget.relpath}]",
+            "{ECHO} %{prj.name} cfg.buildtarget.relpath: %{cfg.buildtarget.relpath}",
             -- "%[%{!cfg.buildtarget.relpath}]" is the rel path to the output directory relative to the .build directory(!)
-            "{ECHO} %{prj.name} !cfg.buildtarget.relpath: %[%{!cfg.buildtarget.relpath}]",
+            "{ECHO} %{prj.name} [!cfg.buildtarget.relpath]: %[%{!cfg.buildtarget.relpath}]",
+            "{ECHO} %{prj.name} !cfg.buildtarget.relpath: %{!cfg.buildtarget.relpath}",
             -- "%[%{cfg.buildtarget.abspath}]" is ALSO the rel path to the output directory relative to the .build directory(!)
-            "{ECHO} %{prj.name} cfg.buildtarget.abspath: %[%{cfg.buildtarget.abspath}]",
+            "{ECHO} %{prj.name} [cfg.buildtarget.abspath]: %[%{cfg.buildtarget.abspath}]",
+            "{ECHO} %{prj.name} cfg.buildtarget.abspath: %{cfg.buildtarget.abspath}",
             -- "%[%{!cfg.buildtarget.abspath}]" is ALSO the rel path to the output directory relative to the .build directory(!)
-            "{ECHO} %{prj.name} !cfg.buildtarget.abspath: %[%{!cfg.buildtarget.abspath}]",
+            "{ECHO} %{prj.name} [!cfg.buildtarget.abspath]: %[%{!cfg.buildtarget.abspath}]",
+            "{ECHO} %{prj.name} !cfg.buildtarget.abspath: %{!cfg.buildtarget.abspath}",
             -- "%[%{cfg.buildtarget.name}]" is the name of the output file, including the extension but without any path information
-            "{ECHO} %{prj.name} cfg.buildtarget.name: %[%{cfg.buildtarget.name}]",
+            "{ECHO} %{prj.name} [cfg.buildtarget.name]: %[%{cfg.buildtarget.name}]",
+            "{ECHO} %{prj.name} cfg.buildtarget.name: %{cfg.buildtarget.name}",
             -- "%[%{cfg.buildtarget.basename}]" is the name of the output file, without the extension and without any path information
-            "{ECHO} %{prj.name} cfg.buildtarget.basename: %[%{cfg.buildtarget.basename}]",
+            "{ECHO} %{prj.name} [cfg.buildtarget.basename]: %[%{cfg.buildtarget.basename}]",
+            "{ECHO} %{prj.name} cfg.buildtarget.basename: %{cfg.buildtarget.basename}",
             -- "%[%{cfg.buildtarget.extension}]" is the extension of the output file, including the dot
-            "{ECHO} %{prj.name} cfg.buildtarget.extension: %[%{cfg.buildtarget.extension}]",
-            "{MKDIR} %[%{WKS_OUTPUT_DIR}]",
+            "{ECHO} %{prj.name} [cfg.buildtarget.extension]: %[%{cfg.buildtarget.extension}]",
+            "{ECHO} %{prj.name} cfg.buildtarget.extension: %{cfg.buildtarget.extension}",
             -- Attempt to copy the symbols first, as the postbuildcommand step will fail
             -- if the last command fails.
-            "{COPYFILE} %[%{cfg.buildtarget.directory}%{cfg.buildtarget.basename}.pdb] %[%{WKS_OUTPUT_DIR}]",
-            "{COPYFILE} %[%{cfg.buildtarget.directory}%{cfg.buildtarget.basename}.map] %[%{WKS_OUTPUT_DIR}]",
-            "{COPYFILE} %[%{cfg.buildtarget.directory}%{cfg.buildtarget.name}] %[%{WKS_OUTPUT_DIR}]"
+            "{MKDIR} %[%{WKS_OUTPUT_DIR}]",
+            "{COPYFILE} %[%{cfg.buildtarget.directory}/%{cfg.buildtarget.basename}.pdb] %[%{WKS_OUTPUT_DIR}]",
+            "{COPYFILE} %[%{cfg.buildtarget.directory}/%{cfg.buildtarget.basename}.map] %[%{WKS_OUTPUT_DIR}]",
+            "{COPYFILE} %[%{cfg.buildtarget.directory}/%{cfg.buildtarget.name}] %[%{WKS_OUTPUT_DIR}]"
         }
     filter {}
 
