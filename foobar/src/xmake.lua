@@ -8,6 +8,7 @@ set_targetdir(".build/bin/"..CFG_FULL_NAME.."/$(projname)")
 set_objectdir(".build/obj")
 set_dependir(".build/deps")
 set_autogendir(".build/generated/"..CFG_FULL_NAME)
+set_configdir(".build/config/"..CFG_FULL_NAME)
 set_installdir("../build/"..CFG_FULL_NAME)
 set_rundir("../build")
 
