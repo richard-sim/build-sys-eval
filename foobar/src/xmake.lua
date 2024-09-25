@@ -37,6 +37,19 @@ elseif is_mode("debug") then
 end
 
 
+-- add_requires("zlib 1.2.11", {alias = "zlib-xmake"})
+-- -- add_requires("conan::zlib/1.2.11", {alias = "zlib-conan"})
+-- add_requires("conan::zlib/1.2.11", {
+--     alias = "zlib-conan",
+--     configs = {
+--         settings = {
+--             "compiler.version=194"
+--         }
+--     }
+-- })
+-- add_requires("vcpkg::zlib 1.2.11#10", {alias = "zlib-vcpkg"})
+
+
 DepKind = {
     ["L0a"] = "shared",
     ["L0b"] = "shared",
@@ -69,3 +82,10 @@ includes("ThirdParty/TPa")
 includes("ThirdParty/TPb")
 includes("ThirdParty/TPc")
 includes("ThirdParty/TPd")
+
+target("deps", function ()
+    set_kind("phony")
+    -- add_deps("L0a", "L0b", "L1a", "L1b", "L1c", "L2a", "L3a", "L3b", "TPa", "TPb", "TPc", "TPd")
+    add_deps("L3a", "L3b")
+    -- add_packages("zlib-xmake", "zlib-conan", "zlib-vcpkg")
+end)
