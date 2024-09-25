@@ -68,6 +68,8 @@ cd foobar\src
 .\tools\xmake\xmake.exe install
 ```
 
+The build mode (configuration) can be `debug`, `releasedbg`, `release`, or `minsizerel`. `profile` doesn't work due to an invalid command line argument (GCC-ony?), and `coverage` is GCC-specific, using gcov. For some commands (like `project`) you can specify `-m "debug|releasedbg|release|minsizerel"` to use all configurations/modes, but not all commands support that (and it's not documented which).
+
 Build output files (executables and shared libraries/dlls) will be copied to `foobar/build/<target>/bin/` (e.g. `foobar/build/x64-windows-releasedbg/bin/`). Public headers will be copied to `include` and libs will be copied to `lib`. The only way to avoid copying the includes and libs is to specify `xmake install L3a` and `xmake install L3b` (or create a `Phony` target with deps of both), but that will not copy the pdb's of the DLLs, only for the executables.
 
 ### Opinion
@@ -77,7 +79,7 @@ There are a lot of good features in xmake, but I find it very hard to reason abo
 The package management feature is very appealing, as it looks like it has sorted out strategies for building some quite annoying packages, and assuming they work, it'll save quite a lot of pain. It is concerning that it appears that the packages are all locked at very specific versions, which may well be outdated. It looks quite easy to create custom package repositories, however.
 There are built-in integrations with many major build systems like Cmake and Ninja, and package managers like vcpkg and conan.
 
-Upon testing, both package management with both Conan and VCPkg are broken when following the basic zlib examples from the docs. Bug reports have been submitted, but that's very worrying.
+Upon testing, package management with both Conan and VCPkg are broken when following the basic zlib examples from the docs. Bug reports have been submitted, but that's very worrying.
 
 Visual Studio project/solution generation is a second-class citizen to the build-system functionality of xmake. The generated VS projects shell out to xmake rather than use the compilers directly, to get around issues with xmake's design not being oriented to this use case.
 
