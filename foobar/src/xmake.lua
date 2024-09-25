@@ -47,7 +47,7 @@ end
 --         }
 --     }
 -- })
--- add_requires("vcpkg::zlib 1.2.11#10", {alias = "zlib-vcpkg"})
+-- add_requires("vcpkg::zlib 1.2.11", {alias = "zlib-vcpkg"})
 
 
 DepKind = {
