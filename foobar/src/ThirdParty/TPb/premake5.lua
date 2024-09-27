@@ -1,25 +1,24 @@
 local rootDir = _MAIN_SCRIPT_DIR
 local absProjectPath = _SCRIPT_DIR
 local relProjectPath = path.rebase(absProjectPath, rootDir, rootDir)
+local projectName = path.getname(relProjectPath)
+
+local depInfo = DepInfo[projectName]
 
 
-function use_TPb(options)
+depInfo.use = function (options)
     options = options or {}
-    local depInfo = DepInfo[relProjectPath]
 
-    filter "kind:not StaticLib"
+    filter("kind:not StaticLib", function()
         links { "TPb" }
-    filter {}
+    end)
 
-    if depInfo.staticFilter then
-        filter { depInfo.staticFilter }
-            defines { "TPb_STATIC" }
-    end
-    if depInfo.sharedFilter then
-        filter { depInfo.sharedFilter }
-            defines { "TPb_SHARED" }
-    end
-    filter {}
+    filter(depInfo.staticFilter, function()
+        defines { "TPb_STATIC" }
+    end)
+    filter(depInfo.sharedFilter, function()
+        defines { "TPb_SHARED" }
+    end)
 
     externalincludedirs { relProjectPath }
 end
@@ -29,19 +28,12 @@ function TPb(options)
     options = options or {}
 
     project "TPb"
-        local depInfo = DepInfo[relProjectPath]
-        if depInfo.staticFilter then
-            filter { depInfo.staticFilter }
-                kind "StaticLib"
-        end
-        if depInfo.sharedFilter then
-            filter { depInfo.sharedFilter }
-                kind "SharedLib"
-        end
-        if not depInfo.staticFilter and not depInfo.sharedFilter then
-            error "No staticFilter or sharedFilter defined in DepInfo"
-        end
-        filter {}
+        filter(depInfo.staticFilter, function()
+            kind "StaticLib"
+        end)
+        filter(depInfo.sharedFilter, function()
+            kind "SharedLib"
+        end)
 
         language "C"
 
@@ -50,42 +42,48 @@ function TPb(options)
         --       project being directly defined here.
         location (PRJ_FILE_DESTINATION)
         objdir (PRJ_OBJ_DIR)
-        filter "kind:StaticLib"
+        filter("kind:StaticLib", function()
             targetdir (PRJ_BIN_DIR)
-        filter "kind:not StaticLib"
+        end)
+        filter("kind:not StaticLib", function()
             targetdir (PRJ_OUTPUT_DIR)
-        filter {}
+        end)
 
         files { relProjectPath.."/TPb/**.h", relProjectPath.."/TPb/**.c" }
         includedirs { relProjectPath.."/TPb" }
         includedirs { relProjectPath }
 
         defines { "TPb_BUILDING" }
-        filter "kind:StaticLib"
+        filter("kind:StaticLib", function()
             defines { "TPb_STATIC" }
-        filter "kind:SharedLib"
+        end)
+        filter("kind:SharedLib", function()
             defines { "TPb_SHARED" }
-        filter {}
+        end)
 
-        filter "configurations:Release"
+        filter("configurations:Release", function()
             defines { "NDEBUG" }
             symbols "Off"
             optimize "On"
-        filter "configurations:RelDebug"
+        end)
+        filter("configurations:RelDebug", function()
             defines { "DEBUG" }
             symbols "On"
             optimize "On"
-        filter "configurations:Debug"
+        end)
+        filter("configurations:Debug", function()
             defines { "DEBUG" }
             symbols "On"
             optimize "Off"
-        filter "configurations:Profile"
+        end)
+        filter("configurations:Profile", function()
             defines { "NDEBUG" }
             symbols "On"
             optimize "On"
-        filter "configurations:Test"
+        end)
+        filter("configurations:Test", function()
             defines { "DEBUG" }
             symbols "On"
             optimize "Off"
-        filter {}
+        end)
 end

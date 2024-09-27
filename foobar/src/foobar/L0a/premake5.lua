@@ -1,33 +1,35 @@
 local rootDir = _MAIN_SCRIPT_DIR
 local absProjectPath = _SCRIPT_DIR
 local relProjectPath = path.rebase(absProjectPath, rootDir, rootDir)
+local projectName = path.getname(relProjectPath)
+
+local depInfo = DepInfo[projectName]
 
 
-function use_L0a(options)
+depInfo.use = function (options)
     options = options or {}
-    local depInfo = DepInfo[relProjectPath]
 
-    filter "kind:not StaticLib"
+    filter("kind:not StaticLib", function()
         links { "L0a" }
-    filter {}
+    end)
 
-    if depInfo.staticFilter then
-        filter { depInfo.staticFilter }
-            defines { "L0a_STATIC" }
-    end
-    if depInfo.sharedFilter then
-        filter { depInfo.sharedFilter }
-            defines { "L0a_SHARED" }
-    end
-    filter {}
+    filter(depInfo.staticFilter, function()
+        defines { "L0a_STATIC" }
+    end)
+    filter(depInfo.sharedFilter, function()
+        defines { "L0a_SHARED" }
+    end)
 
     externalincludedirs { relProjectPath.."/common" }
-    filter "system:linux"
+    filter("system:linux", function()
         externalincludedirs { relProjectPath.."/linux" }
-    filter "system:macosx"
+    end)
+    filter("system:macosx", function()
         externalincludedirs { relProjectPath.."/macos" }
-    filter "system:windows"
+    end)
+    filter("system:windows", function()
         externalincludedirs { relProjectPath.."/windows" }
+    end)
 end
 
 
@@ -35,19 +37,12 @@ function L0a(options)
     options = options or {}
 
     project "L0a"
-        local depInfo = DepInfo[relProjectPath]
-        if depInfo.staticFilter then
-            filter { depInfo.staticFilter }
-                kind "StaticLib"
-        end
-        if depInfo.sharedFilter then
-            filter { depInfo.sharedFilter }
-                kind "SharedLib"
-        end
-        if not depInfo.staticFilter and not depInfo.sharedFilter then
-            error "No staticFilter or sharedFilter defined in DepInfo"
-        end
-        filter {}
+        filter(depInfo.staticFilter, function()
+            kind "StaticLib"
+        end)
+        filter(depInfo.sharedFilter, function()
+            kind "SharedLib"
+        end)
 
         language "C"
 
@@ -56,56 +51,68 @@ function L0a(options)
         --       project being directly defined here.
         location (PRJ_FILE_DESTINATION)
         objdir (PRJ_OBJ_DIR)
-        filter "kind:StaticLib"
+        filter("kind:StaticLib", function()
             targetdir (PRJ_BIN_DIR)
-        filter "kind:not StaticLib"
+        end)
+        filter("kind:not StaticLib", function()
             targetdir (PRJ_OUTPUT_DIR)
-        filter {}
+        end)
 
-        files { relProjectPath.."/common/**.h", relProjectPath.."/common/**.c" }
-        includedirs { relProjectPath.."/common/L0a" }
+        -- vpaths { ["common/*"] = { relProjectPath.."/common/"..projectName } }
+        files { relProjectPath.."/common/"..projectName.."/**.h", relProjectPath.."/common/"..projectName.."/**.c" }
+        includedirs { relProjectPath.."/common/"..projectName }
         includedirs { relProjectPath.."/common" }
 
-        filter "system:linux"
-            files { relProjectPath.."/linux/**.h", relProjectPath.."/linux/**.c" }
-            includedirs { relProjectPath.."/linux/L0a" }
+        filter("system:linux", function()
+            -- vpaths { ["linux/*"] = { relProjectPath.."/linux/"..projectName } }
+            files { relProjectPath.."/linux/"..projectName.."/**.h", relProjectPath.."/linux/"..projectName.."/**.c" }
+            includedirs { relProjectPath.."/linux/"..projectName }
             includedirs { relProjectPath.."/linux" }
-        filter "system:macosx"
-            files { relProjectPath.."/macos/**.h", relProjectPath.."/macos/**.c" }
-            includedirs { relProjectPath.."/macos/L0a" }
+        end)
+        filter("system:macosx", function()
+            -- vpaths { ["macos/*"] = { relProjectPath.."/macos/"..projectName } }
+            files { relProjectPath.."/macos/"..projectName.."/**.h", relProjectPath.."/macos/"..projectName.."/**.c" }
+            includedirs { relProjectPath.."/macos/"..projectName }
             includedirs { relProjectPath.."/macos" }
-        filter "system:windows"
-            files { relProjectPath.."/windows/**.h", relProjectPath.."/windows/**.c" }
-            includedirs { relProjectPath.."/windows/L0a" }
+        end)
+        filter("system:windows", function()
+            -- vpaths { ["windows/*"] = { relProjectPath.."/windows/"..projectName } }
+            files { relProjectPath.."/windows/"..projectName.."/**.h", relProjectPath.."/windows/"..projectName.."/**.c" }
+            includedirs { relProjectPath.."/windows/"..projectName }
             includedirs { relProjectPath.."/windows" }
-        filter {}
+        end)
 
         defines { "L0a_BUILDING" }
-        filter "kind:StaticLib"
+        filter("kind:StaticLib", function()
             defines { "L0a_STATIC" }
-        filter "kind:SharedLib"
+        end)
+        filter("kind:SharedLib", function()
             defines { "L0a_SHARED" }
-        filter {}
+        end)
 
-        filter "configurations:Release"
+        filter("configurations:Release", function()
             defines { "NDEBUG" }
             symbols "Off"
             optimize "On"
-        filter "configurations:RelDebug"
+        end)
+        filter("configurations:RelDebug", function()
             defines { "DEBUG" }
             symbols "On"
             optimize "On"
-        filter "configurations:Debug"
+        end)
+        filter("configurations:Debug", function()
             defines { "DEBUG" }
             symbols "On"
             optimize "Off"
-        filter "configurations:Profile"
+        end)
+        filter("configurations:Profile", function()
             defines { "NDEBUG" }
             symbols "On"
             optimize "On"
-        filter "configurations:Test"
+        end)
+        filter("configurations:Test", function()
             defines { "DEBUG" }
             symbols "On"
             optimize "Off"
-        filter {}
+        end)
 end

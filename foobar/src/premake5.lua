@@ -1,37 +1,19 @@
-PRJ_FILE_DESTINATION = ".build"
-CFG_FULL_NAME = "%{cfg.system:lower()}-%{cfg.platform:lower()}-%{cfg.buildcfg:lower()}"
-PRJ_OUTPUT_DIR = ".build/bin/%{CFG_FULL_NAME}/%{prj.name}"
-PRJ_BIN_DIR = ".build/bin/%{CFG_FULL_NAME}/%{prj.name}"
-PRJ_OBJ_DIR = ".build/obj/%{CFG_FULL_NAME}/%{prj.name}"
-WKS_OUTPUT_DIR = "../build/%{CFG_FULL_NAME}"
+-- NOTE: System configuration is in premake-system.lua
 
 
-local FilterOptimizedBuilds = "configurations:Release or Profile"
-local FilterDebuggableBuilds = "configurations:RelDebug or Debug or Test"
-local DepAlwaysStatic = {
-    staticFilter={},
-    sharedFilter=nil
-}
-local DepAlwaysShared = {
-    staticFilter=nil,
-    sharedFilter={}
-}
-local DepStaticWhenOptimizedOnly = {
-    staticFilter=FilterOptimizedBuilds,
-    sharedFilter=FilterDebuggableBuilds
-}
-
+-- Library build configurations
 DepInfo = {
-    ["foobar/L0a"] = DepAlwaysShared,
-    ["foobar/L0b"] = DepStaticWhenOptimizedOnly,
-    ["foobar/L1a"] = DepAlwaysShared,
-    ["foobar/L1b"] = DepStaticWhenOptimizedOnly,
-    ["foobar/L1c"] = DepStaticWhenOptimizedOnly,
-    ["foobar/L2a"] = DepStaticWhenOptimizedOnly,
-    ["ThirdParty/TPa"] = DepAlwaysShared,
-    ["ThirdParty/TPb"] = DepAlwaysShared,
-    ["ThirdParty/TPc"] = DepAlwaysStatic,
-    ["ThirdParty/TPd"] = DepAlwaysStatic
+    -- NOTE: Tables must be copied as .use() is set by each project
+    ["L0a"] = table.deepcopy(DepAlwaysShared),
+    ["L0b"] = table.deepcopy(DepStaticWhenOptimizedOnly),
+    ["L1a"] = table.deepcopy(DepAlwaysShared),
+    ["L1b"] = table.deepcopy(DepStaticWhenOptimizedOnly),
+    ["L1c"] = table.deepcopy(DepStaticWhenOptimizedOnly),
+    ["L2a"] = table.deepcopy(DepStaticWhenOptimizedOnly),
+    ["TPa"] = table.deepcopy(DepAlwaysShared),
+    ["TPb"] = table.deepcopy(DepAlwaysShared),
+    ["TPc"] = table.deepcopy(DepAlwaysStatic),
+    ["TPd"] = table.deepcopy(DepAlwaysStatic)
 }
 
 include "foobar/L0a"
@@ -53,9 +35,7 @@ workspace "foobar"
     configurations { "Release", "RelDebug", "Debug", "Profile", "Test" }
     platforms { "x86_64" }
 
-    location ".build"
-    targetdir ".build/bin/%{cfg.platform}-%{cfg.buildcfg}"
-    objdir ".build/obj/%{cfg.platform}-%{cfg.buildcfg}"
+    location (PRJ_FILE_DESTINATION)
 
     -- Will be inherited by all projects, so we don't have to repeat it
     filter "kind:not StaticLib"
@@ -92,6 +72,8 @@ workspace "foobar"
             "{COPYFILE} %[%{cfg.buildtarget.directory}/%{cfg.buildtarget.name}] %[%{WKS_OUTPUT_DIR}]"
         }
     filter {}
+
+    startproject "L3a"
 
     group "Libraries"
         L0a {}

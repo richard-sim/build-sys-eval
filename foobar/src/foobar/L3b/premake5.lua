@@ -1,6 +1,7 @@
 local rootDir = _MAIN_SCRIPT_DIR
 local absProjectPath = _SCRIPT_DIR
 local relProjectPath = path.rebase(absProjectPath, rootDir, rootDir)
+local projectName = path.getname(relProjectPath)
 
 
 function L3b(options)
@@ -21,29 +22,33 @@ function L3b(options)
         includedirs { relProjectPath.."/L3b" }
         includedirs { relProjectPath }
 
-        use_L0a {}
-        use_L0b {}
-        use_L1b {}
+        DepInfo["L0a"].use {}
+        DepInfo["L0b"].use {}
+        DepInfo["L1b"].use {}
 
-        filter "configurations:Release"
+        filter("configurations:Release", function()
             defines { "NDEBUG" }
             symbols "Off"
             optimize "On"
-        filter "configurations:RelDebug"
+        end)
+        filter("configurations:RelDebug", function()
             defines { "DEBUG" }
             symbols "On"
             optimize "On"
-        filter "configurations:Debug"
+        end)
+        filter("configurations:Debug", function()
             defines { "DEBUG" }
             symbols "On"
             optimize "Off"
-        filter "configurations:Profile"
+        end)
+        filter("configurations:Profile", function()
             defines { "NDEBUG" }
             symbols "On"
             optimize "On"
-        filter "configurations:Test"
+        end)
+        filter("configurations:Test", function()
             defines { "DEBUG" }
             symbols "On"
             optimize "Off"
-        filter {}
+        end)
 end

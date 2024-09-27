@@ -17,6 +17,8 @@
 
 int main(int argc, char *argv[])
 {
+	(void)argc; (void)argv;
+
     printf(__FILE__ "\n");
     printf(__DATE__ " " __TIME__ "\n");
 

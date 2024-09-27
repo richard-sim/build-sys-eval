@@ -1,25 +1,24 @@
 local rootDir = _MAIN_SCRIPT_DIR
 local absProjectPath = _SCRIPT_DIR
 local relProjectPath = path.rebase(absProjectPath, rootDir, rootDir)
+local projectName = path.getname(relProjectPath)
+
+local depInfo = DepInfo[projectName]
 
 
-function use_L1a(options)
+depInfo.use = function (options)
     options = options or {}
-    local depInfo = DepInfo[relProjectPath]
 
-    filter "kind:not StaticLib"
+    filter("kind:not StaticLib", function()
         links { "L1a" }
-    filter {}
+    end)
 
-    if depInfo.staticFilter then
-        filter { depInfo.staticFilter }
-            defines { "L1a_STATIC" }
-    end
-    if depInfo.sharedFilter then
-        filter { depInfo.sharedFilter }
-            defines { "L1a_SHARED" }
-    end
-    filter {}
+    filter(depInfo.staticFilter, function()
+        defines { "L1a_STATIC" }
+    end)
+    filter(depInfo.sharedFilter, function()
+        defines { "L1a_SHARED" }
+    end)
 
     externalincludedirs { relProjectPath }
 end
@@ -29,19 +28,12 @@ function L1a(options)
     options = options or {}
 
     project "L1a"
-        local depInfo = DepInfo[relProjectPath]
-        if depInfo.staticFilter then
-            filter { depInfo.staticFilter }
-                kind "StaticLib"
-        end
-        if depInfo.sharedFilter then
-            filter { depInfo.sharedFilter }
-                kind "SharedLib"
-        end
-        if not depInfo.staticFilter and not depInfo.sharedFilter then
-            error "No staticFilter or sharedFilter defined in DepInfo"
-        end
-        filter {}
+        filter(depInfo.staticFilter, function()
+            kind "StaticLib"
+        end)
+        filter(depInfo.sharedFilter, function()
+            kind "SharedLib"
+        end)
 
         language "C"
 
@@ -50,46 +42,52 @@ function L1a(options)
         --       project being directly defined here.
         location (PRJ_FILE_DESTINATION)
         objdir (PRJ_OBJ_DIR)
-        filter "kind:StaticLib"
+        filter("kind:StaticLib", function()
             targetdir (PRJ_BIN_DIR)
-        filter "kind:not StaticLib"
+        end)
+        filter("kind:not StaticLib", function()
             targetdir (PRJ_OUTPUT_DIR)
-        filter {}
+        end)
 
         files { relProjectPath.."/L1a/**.h", relProjectPath.."/L1a/**.c" }
         includedirs { relProjectPath.."/L1a" }
         includedirs { relProjectPath }
 
-        use_L0a {}
-        use_TPa {}
-        use_TPb {}
+        DepInfo["L0a"].use {}
+        DepInfo["TPa"].use {}
+        DepInfo["TPb"].use {}
 
         defines { "L1a_BUILDING" }
-        filter "kind:StaticLib"
+        filter("kind:StaticLib", function()
             defines { "L1a_STATIC" }
-        filter "kind:SharedLib"
+        end)
+        filter("kind:SharedLib", function()
             defines { "L1a_SHARED" }
-        filter {}
+        end)
 
-        filter "configurations:Release"
+        filter("configurations:Release", function()
             defines { "NDEBUG" }
             symbols "Off"
             optimize "On"
-        filter "configurations:RelDebug"
+        end)
+        filter("configurations:RelDebug", function()
             defines { "DEBUG" }
             symbols "On"
             optimize "On"
-        filter "configurations:Debug"
+        end)
+        filter("configurations:Debug", function()
             defines { "DEBUG" }
             symbols "On"
             optimize "Off"
-        filter "configurations:Profile"
+        end)
+        filter("configurations:Profile", function()
             defines { "NDEBUG" }
             symbols "On"
             optimize "On"
-        filter "configurations:Test"
+        end)
+        filter("configurations:Test", function()
             defines { "DEBUG" }
             symbols "On"
             optimize "Off"
-        filter {}
+        end)
 end

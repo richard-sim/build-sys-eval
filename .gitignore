@@ -1,4 +1,5 @@
 foobar/build/
+foobar/src/!projects*
 foobar/src/.build*
 
 # Ignore xmake files (it loves to scatter them everywhere)

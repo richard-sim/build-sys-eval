@@ -24,7 +24,7 @@ Custom toolchains are possible, but more involved to set up than XMake. Unknown 
 
 Development is slow, with nobody currently pushing forward on major development efforts or functionality, though there are semi-frequent community contributions. There is not much traction around getting bugs fixed. Less-common or newer build targets like WDK or dotnet Core CLR are also not supported (but could be added).
 
-The required usage and structure of `premake5.lua` scripts differs significantly from how they're described in the documentation, in order to reduce duplication of configuration across projects and dependencies. There is no concept of scoping, so you have to be careful to manually end filters since otherwise they'll apply to all subsequent code. Project-level `premake5.lua` scripts generally do not show up in the error information/callstack when they have errors, which makes it very hard to know where there are errors in the workspace, since you don't even know what project the errors are occuring in (or what the errors are).
+The required usage and structure of `premake5.lua` scripts differs significantly from how they're described in the documentation, in order to reduce duplication of configuration across projects and dependencies. ~~There is no concept of scoping, so you have to be careful to manually end filters since otherwise they'll apply to all subsequent code.~~ FIXED! Was able to monkeypatch filter() to add scoping! See `foobar/src/tools/premake/utils.lua`. ~~Project-level `premake5.lua` scripts generally do not show up in the error information/callstack when they have errors, which makes it very hard to know where there are errors in the workspace, since you don't even know what project the errors are occuring in (or what the errors are).~~ FIXED! PR submitted to Premake, so hopefully it'll make it into the mainline.
 
 #### Where Premake will save time
 
@@ -35,6 +35,7 @@ The required usage and structure of `premake5.lua` scripts differs significantly
 * Documentation explains the why's and how's
 * Small codebase that's easy to navigate
 * Easily distributed in a repo as it's a single file and binaries are provided for common platforms
+* There are quite a few community plugins/extensions available to add functionality and use as examples if/when needed.
 
 #### Where Premake will cost time
 
@@ -42,7 +43,12 @@ The required usage and structure of `premake5.lua` scripts differs significantly
 * Limited toolchain support built-in
 * No interoperability with other build systems out of the box
 * No third-party library support/package management
-* Configuration script errors generally don't show the file/line of the error or the error message, just that there was an error somewhere.
+* ~~Configuration script errors generally don't show the file/line of the error or the error message, just that there was an error somewhere.~~ FIXED! PR submitted to Premake.
+* By its nature as a strictly build file generation system, it has limitations to how you can configure/script certain things. As these are limitations of the underlying build tools that it targets (i.e. Visual Studio), it's not unreasonable to have the limitations however.
+
+### Conclusion
+
+Premake feels antiquainted in some ways, but the bones are there and are understandable. With the exception of a non-blocking bug, it works as expected. It does not have any concept of package management or package managers, so that has to be handled separately - but I'm OK with separation of concerns here. Separating build configuration (Premake) and dependency/package management (vkpkg, Conan, maybe xmake?) feels like the right design. Unlike web and mobile development, there are relatively few external dependencies to manage where I won't be likely to want to make local changes anyway.
 
 ## XMake
 
@@ -100,15 +106,20 @@ The resulting `xmake.lua` scripts are shorter and simpler than the corresponding
 #### Where XMake will cost time
 
 * Appears to be very buggy and releases are made without sufficient testing.
-* Documentation does not explain the why's or how's, and has many gaps
+* Documentation does not explain the why's, how's, or workflows, has many gaps and missing parts
 * Author is not a native English speaker, so support is difficult to understand
 * Very difficult to reason about how things work, as it's not explained anywhere
-* Not much control over where it puts files, with many hardcoded paths
+* Not much control over where it puts files, with many hardcoded paths.
+* Hard-coded paths for package management are deep enough to quickly hit MSVC's MAX_PATH (260 char) limit and the author isn't interested in addressing it.
 * Generated VS projects are a kludge that call XMake rather than the build toolchain directly
 * Generated CMake projects are monoliths, so may not be the most usable in IDEs like CLion
 * Large codebase with many features that are unneeded.
 * Command lines are poorly documented and can be quite long for common operations
 * Not easily distributed in a repo as many files are required and not all platforms provide pre-built packages
+
+### Conclusion
+
+I'm too afraid of the number of bugs and complexity of xmake. Great features are useless if they don't work and require time to troubleshoot, and even more time to fix yourself. The codebase is too complex and poorly documented to make that a reasonable endeavour for someone unfamiliar with the build system.
 
 ## CMake
 
@@ -116,7 +127,14 @@ TODO
 
 ### Opinion
 
+Ouch ouch ouch.
+
 #### Where CMake will save time
 
 #### Where CMake will cost time
 
+* OUCH
+
+### Conclusion
+
+I can't escape CMake as almost all dependencies use it, but if I can avoid using it myself and hide those deps behind a better build system, it'll save me from most of the pain. Premake has several CMake-importer plugins, and xmake natively supports CMake packages.
