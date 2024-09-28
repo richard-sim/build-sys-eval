@@ -20,35 +20,34 @@ Visual Studio project generation is a first-class citizen, and the design of Pre
 
 The documentation explains the important why's behind things quite well, and the behaviour and code is quite easy to reason about as a result. Usage of the various functionality is consistent.
 
-Custom toolchains are possible, but more involved to set up than XMake. Unknown how easy or hard it is to swap between MSVC and Clang-CL compilers.
+Custom toolchains are possible, but are more involved to set up than XMake. Swapping between between MSVC and Clang-CL compilers is just a matter of specifying `toolset "clang"`, which will use `clang` for Linux and MacOS, and `clang-cl` for MSVC. Less-common or newer build targets like WDK or dotnet Core CLR are also not supported (but could be added).
 
-Development is slow, with nobody currently pushing forward on major development efforts or functionality, though there are semi-frequent community contributions. There is not much traction around getting bugs fixed. Less-common or newer build targets like WDK or dotnet Core CLR are also not supported (but could be added).
+Development is slow, with nobody currently pushing forward on major development efforts or functionality, though there are semi-frequent community contributions and there's been a sharp untick in them recently - hopefully that continues! There is not much traction around getting bugs fixed by maintainers, but PR's are quickly discussed, accepted and merged. PR's are genuinely welcomed, and a good amount of effort is made to help with them when needed.
 
-The required usage and structure of `premake5.lua` scripts differs significantly from how they're described in the documentation, in order to reduce duplication of configuration across projects and dependencies. ~~There is no concept of scoping, so you have to be careful to manually end filters since otherwise they'll apply to all subsequent code.~~ FIXED! Was able to monkeypatch filter() to add scoping! See `foobar/src/tools/premake/utils.lua`. ~~Project-level `premake5.lua` scripts generally do not show up in the error information/callstack when they have errors, which makes it very hard to know where there are errors in the workspace, since you don't even know what project the errors are occuring in (or what the errors are).~~ FIXED! PR submitted to Premake, so hopefully it'll make it into the mainline.
+The required usage and structure of `premake5.lua` scripts for large-scale projects differs significantly from how they're described in the documentation, in order to reduce duplication of configuration across projects and dependencies. ~~There is no concept of scoping, so you have to be careful to manually end filters since otherwise they'll apply to all subsequent code.~~ FIXED! I was able to monkeypatch filter() to add scoping! See `foobar/src/tools/premake/utils.lua`. ~~Project-level `premake5.lua` scripts generally do not show up in the error information/callstack when they have errors, which makes it very hard to know where there are errors in the workspace, since you don't even know what project the errors are occuring in (or what the errors are).~~ FIXED! A PR improving the error messages from `include()` has been merged into mainline.
 
 #### Where Premake will save time
 
-* Easy to reason about the behaviour
-* Consistent behaviour
+* Easy to reason about, consistent, the behaviour
 * Generation of purely native VS project files
 * Easily extensible
 * Documentation explains the why's and how's
-* Small codebase that's easy to navigate
-* Easily distributed in a repo as it's a single file and binaries are provided for common platforms
+* Small codebase that's easy to navigate and understand
+* Binaries are easily distributed inside a repo, as they're a single file with no dependencies. Binaries are also provided for common platforms.
 * There are quite a few community plugins/extensions available to add functionality and use as examples if/when needed.
 
 #### Where Premake will cost time
 
 * Not very actively developed or maintained
 * Limited toolchain support built-in
+* Pre-built binaries are quite out of date currently (but custom binaries can easily be included directly in repos, which is easier for users anyway)
 * No interoperability with other build systems out of the box
 * No third-party library support/package management
-* ~~Configuration script errors generally don't show the file/line of the error or the error message, just that there was an error somewhere.~~ FIXED! PR submitted to Premake.
 * By its nature as a strictly build file generation system, it has limitations to how you can configure/script certain things. As these are limitations of the underlying build tools that it targets (i.e. Visual Studio), it's not unreasonable to have the limitations however.
 
 ### Conclusion
 
-Premake feels antiquainted in some ways, but the bones are there and are understandable. With the exception of a non-blocking bug, it works as expected. It does not have any concept of package management or package managers, so that has to be handled separately - but I'm OK with separation of concerns here. Separating build configuration (Premake) and dependency/package management (vkpkg, Conan, maybe xmake?) feels like the right design. Unlike web and mobile development, there are relatively few external dependencies to manage where I won't be likely to want to make local changes anyway.
+Premake feels antiquainted in some ways, but the bones are there and are understandable. After some time with it, I'm siding on it being mature, not unmaintained. With the exception of a non-blocking bug, it works as expected. It does not have any concept of package management or package managers, so that has to be handled separately - but I'm OK with separation of concerns here. Separating build configuration (Premake) and dependency/package management (vkpkg, Conan, maybe xmake?) feels like the right design. Unlike web and mobile development, there are relatively few external dependencies to manage where I won't be likely to want to make local changes to them anyway.
 
 ## XMake
 

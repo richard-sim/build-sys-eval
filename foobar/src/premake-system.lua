@@ -49,7 +49,7 @@ DepStaticWhenOptimizedOnly = {
 -- NOTE: The "msc-llvm" toolset is the default for Windows projects using llvm
 -- NOTE: The "msc-llvm-vs2022" toolset is the default for Windows projects using llvm with Visual Studio 2022
 -- NOTE: clang is transformed to ClangCL on Windows, whereas clang-cl is transformed to cl
---       abd msc-clang is transformed to llvm
+--       and msc-clang is transformed to llvm
 toolset "clang"
 cdialect "C17"
 cppdialect "C++17"
